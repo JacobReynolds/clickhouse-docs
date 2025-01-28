@@ -11,7 +11,7 @@ ClickHouse Cloud enables customers to manage user access within the console and 
 Configure the following role assignments within the Console > Users and roles page. 
 
 Users must be assigned an organization level role and may optionally be assigned service roles for one or more services. Service roles may be optionally configured for users to access the SQL console in the service settings page.
-- Users assigned the Organization Admin role are granted Service Admin by default and may not be modified.
+- Users assigned the Organization Admin role are granted Service Admin by default.
 - Users added to an organization via a SAML integration are automatically assigned the Member role.
 - Service Admin is assigned the SQL console admin role by default. SQL console permissions may be removed in the service settings page.
 
