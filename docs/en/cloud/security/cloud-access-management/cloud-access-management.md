@@ -8,33 +8,25 @@ title: Cloud access management
 ClickHouse Cloud enables customers to manage user access within the console and within the database using either pre-defined roles or custom database roles. 
 
 ## Console users and roles
-Configure the following role assignments within the Console > Users and roles page.
+Configure the following role assignments within the Console > Users and roles page. 
 
-| Role                   | Description                                      |
-|:-----------------------|:-------------------------------------------------|
-| Admin                 | Perform all administrative activities for an organization and control all settings. Assigned to the first user in the organization by default. |
-| Developer             | View access to everything except Services, ability to generate read-only API keys. |
-| Billing               | View usage and invoices, and manage payment methods. |
-| Member                | Sign-in only with the ability to manage personal profile settings. Assigned to SAML SSO users by default. |
+Users must be assigned an organization level role and may optionally be assigned service roles for one or more services. Service roles may be optionally configured for users to access the SQL console in the service settings page.
+- Users assigned the Organization Admin role are granted Service Admin by default and may not be modified.
+- Users added to an organization via a SAML integration are automatically assigned the Member role.
+- Service Admin is assigned the SQL console admin role by default. SQL console permissions may be removed in the service settings page.
+
+| Context      | Role                   | Description                                      |
+|:-------------|:-----------------------|:-------------------------------------------------|
+| Organization | Admin                  | Perform all administrative activities for an organization and control all settings. Assigned to the first user in the organization by default. |
+| Organization | Developer             | View access to everything except Services, ability to generate read-only API keys. |
+| Organization | Billing               | View usage and invoices, and manage payment methods. |
+| Organization | Member                | Sign-in only with the ability to manage personal profile settings. Assigned to SAML SSO users by default. |
+| Service      | Service Admin         | Manage service settings.                        |
+| Service      | Service ReadOnly      | View services and settings.                     |
+| SQL console  | SQL console admin     | Administrative access to databases within the service equivalent to the Default database role. |
+| SQL console  | SQL console read only | Read only access to databases within the service |
+| SQL console  | Custom                | Configure using SQL [GRANT](/en/sql-reference/statements/grant) statement; assign the role to a SQL console user by naming the role after the user |
   
-**Service roles** allow users to interact with deployed services and are assigned in addition to console roles. Users may be assigned no services, specific services, or all services. Organization Admins are assigned Service Admin for all services in the organization.
-
-| Role                  | Description                                     |
-|:----------------------|:------------------------------------------------|
-| Service Admin         | Manage service settings.                        |
-| Service ReadOnly      | View services and settings.                     |
-
-## Console service permissions
-Configure the following role assignments within the Console > Service > Settings page.
-
-**SQL console roles** allow a console user to access databases within a service using the SQL console. SQL console roles may be assigned to the Service Admin or Service Read Only Console roles. Only users assigned the service role for the specific service will be able to interact with the database via SQL console. 
-
-| Role                  | Description                                     |
-|:----------------------|:------------------------------------------------|
-| SQL console admin     | Administrative access to databases within the service equivalent to the Default database role. |
-| SQL console read only | Read only access to databases within the service |
-| Custom                | Configure using SQL [GRANT](/en/sql-reference/statements/grant) statement; assign the role to a SQL console user by naming the role after the user |
-
 To create a custom role for a SQL console user and grant it a general role, run the following commands. The email address must match the user's email address in the console. 
     
 1. Create the database_developer role and grant SHOW, CREATE, ALTER, and DELETE permissions.
